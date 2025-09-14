@@ -1,20 +1,18 @@
 package com.example.demo.controllers;
 
-import com.example.demo.respository.repository;
+import com.example.demo.respository.Repository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 
 @RestController
 public class NoteController {
 
-    private final repository userRespository;
+    private final Repository userRespository;
 
-    public NoteController(repository userRespository) {
+    public NoteController(Repository userRespository) {
         this.userRespository = userRespository;
     }
 
