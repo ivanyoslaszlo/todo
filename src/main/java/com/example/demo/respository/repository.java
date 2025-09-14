@@ -1,9 +1,7 @@
 package com.example.demo.respository;
 
 import com.example.demo.entities.Users;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -11,8 +9,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-@Repository
-public class repository {
+@org.springframework.stereotype.Repository
+public class Repository {
 
     private final String url = "jdbc:sqlite:user.datas.db";
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -51,10 +49,14 @@ public class repository {
             throw new RuntimeException(e);
         }
     }
+    public String password_hash(String password){
 
+        return encoder.encode(password);
+    }
     public boolean check_password(String rawPassword, String encoded_password) {
         return encoder.matches(rawPassword, encoded_password);
     }
+
 
     public Users findByUsername(String username) {
         String sql = "SELECT username, email, password FROM users WHERE username=?";
