@@ -17,6 +17,7 @@ public class HomePageController {
         return "register";
     }
 
+
     @GetMapping("/loginpage")
     public String showLoginPage() {
         return "loginpage";
