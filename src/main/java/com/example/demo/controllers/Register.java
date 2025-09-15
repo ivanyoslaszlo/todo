@@ -1,7 +1,7 @@
 package com.example.demo.controllers;
 
 import com.example.demo.entities.Users;
-import com.example.demo.respository.repository;
+import com.example.demo.respository.Repository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +16,9 @@ import java.time.format.DateTimeFormatter;
 public class Register {
 
 
-    private final repository userRespository;
+    private final Repository userRespository;
 
-    public Register(repository userRespository) {
+    public Register(Repository userRespository) {
         this.userRespository = userRespository;
     }
 

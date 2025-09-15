@@ -80,6 +80,30 @@ public class Repository {
         }
         return null;
     }
+    public boolean is_admin(String username){
+        try(
+                Connection connection=DriverManager.getConnection("jdbc:sqlite:user.datas.db");
+
+                PreparedStatement preparedStatement=connection.prepareStatement("SELECT role from users WHERE username=?")
+                ){
+            preparedStatement.setString(1,username);
+            ResultSet resultSet=preparedStatement.executeQuery();
+
+            if (resultSet.next()){
+                String role = resultSet.getString("role");
+                if (role.equals("admin")){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return false;
+    }
 
     public void updateLastLogin(String username) {
         String sql = "UPDATE users SET last_login=? WHERE username=?";

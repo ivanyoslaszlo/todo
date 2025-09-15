@@ -18,18 +18,11 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .cors(Customizer.withDefaults())
-                .csrf(csrf -> csrf.disable())
+                .csrf(csrf -> csrf.disable()) // kikapcsolja a CSRF védelmet
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/register"
-                                ,"/adminpage", "/login", "/loginpage",
-                                "/css/**", "/js/**","/getnoteback","/note",
-                                "/kilepes","/todo","/superadmin","/script/**" ).permitAll()
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll() // minden kérés engedélyezve
                 )
-                .formLogin(form -> form
-                        .loginPage("/loginpage")
-                        .permitAll()
-                )
+                .formLogin(form -> form.disable())
                 .logout(logout -> logout.permitAll());
 
         return http.build();
