@@ -36,10 +36,8 @@ public class Register {
             return "Hiba foglalt felhasználó";
         }
 
-
-        user.setPassword(encoder.encode(user.getPassword()));
+        user.setPassword(userRespository.password_hash(user.getPassword()));
         userRespository.save(user);
-
 
 
         return "Sikeres regisztráció!: " + user.getUsername();
