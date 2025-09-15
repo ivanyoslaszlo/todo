@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 import com.example.demo.entities.Users;
 import com.example.demo.respository.Repository;
+import com.example.demo.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,37 +14,27 @@ import java.time.LocalDateTime;
 @Controller
 public class LoginController {
 
-
-    private final Repository userRespository;
-
-    public LoginController(Repository userRespository) {
-        this.userRespository = userRespository;
+    private final UserService userService;
+    public LoginController(UserService userService ) {
+        this.userService =  userService;
     }
 
+
     @PostMapping("/login")
-    public String logincontroller(@RequestParam String username, @RequestParam String password, HttpSession session, Model model) throws FileNotFoundException {
+    public String logincontroller(@RequestParam String username, @RequestParam String password, HttpSession session, Model modell) throws FileNotFoundException {
 
-        Users user = userRespository.findByUsername(username);
+        String result =userService.loginUser(username,password,session);
 
-        if (user != null) {
-            if (userRespository.check_password(password, user.getPassword())) {
+        if (result.equalsIgnoreCase("User")){
+            return "todo";
 
-                session.setAttribute("user", user.getUsername());
-                session.setAttribute("login_time", LocalDateTime.now().withNano(0));
-
-                System.out.println("Bejelentkezett: " + user.getUsername() + " " + session.getAttribute("login_time"));
-
-                userRespository.updateLastLogin(user.getUsername());
-
-                return "redirect:/todo";
-
-            } else {
-                model.addAttribute("errorMessage", "Hibás jelszó!");
-                return "loginpage";
-            }
         }
-
-        model.addAttribute("errorMessage", "Nincs ilyen felhasználó!");
-        return "loginpage";
+        else if (result.equalsIgnoreCase("Admin")){
+            return "AdminCenter";
+        }
+        else{
+            modell.addAttribute("errorMessage",result);
+            return "loginpage";
+        }
     }
 }

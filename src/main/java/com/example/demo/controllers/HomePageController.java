@@ -26,6 +26,10 @@ public class HomePageController {
         session.invalidate();
         return "loginpage";
     }
+    @GetMapping("/login")
+    public String showLoginpage(){
+        return "loginpage";
+    }
 
 
     @GetMapping("/register")

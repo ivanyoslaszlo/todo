@@ -2,9 +2,86 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdminCenter</title>
+    <style>
+
+.kontroll{
+
+
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+
+}
+.userSelect{
+
+    width: 200px;
+}
+
+
+    </style>
 </head>
+
 <body>
-<p>admin dashboard</p>
+
+    <div class="kontroll">
+        <h1>AdminCenter</h1>
+    
+    <select id="userSelect">
+
+    </div>
+    
+
+    <option value="">-- Válassz felhasználót --</option>
+  </select>
+
+  <div id="details" style="margin-top:20px; border:1px solid #ccc; padding:10px;"></div>
+
+    <script>
+        async function loadUsers() {
+            try {
+                
+                const response = await fetch('/users');
+                if (!response.ok) {
+                    document.getElementById("details").textContent = "Hiba: " + response.status;
+                    return;
+                }
+
+                const users = await response.json();
+
+               
+                const select = document.getElementById("userSelect");
+                users.forEach(user => {
+                    const opt = document.createElement("option");
+                    opt.value = user.username;
+                    opt.textContent = user.username;
+                    select.appendChild(opt);
+                });
+
+                select.addEventListener("change", () => {
+                    const selected = users.find(u => u.username === select.value);
+                    if (selected) {
+                        document.getElementById("details").innerHTML = `
+                  <p><b>Felhasználónév:</b> ${selected.username}</p>
+                  <p><b>Email:</b> ${selected.email}</p>
+                  <p><b>Szerep:</b> ${selected.role}</p>
+                  <p><b>Regisztráció:</b> ${selected.registeredAt}</p>
+                  <p><b>Utolsó login:</b> ${selected.lastLogin}</p>
+                `;
+                    } else {
+                        document.getElementById("details").innerHTML = "";
+                    }
+                });
+
+            } catch (err) {
+                console.error("Hiba a lekérés közben:", err);
+            }
+        }
+
+        
+        loadUsers();
+    </script>
 </body>
 </html>

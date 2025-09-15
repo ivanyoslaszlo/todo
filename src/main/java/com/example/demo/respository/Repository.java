@@ -16,6 +16,28 @@ public class Repository {
     private final String url = "jdbc:sqlite:user.datas.db";
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
+    public List<Users> findAllUsers() {
+        String sql = "SELECT username, email, role, registered_at, last_login FROM users";
+        List<Users> users = new ArrayList<>();
+
+        try (Connection connection = DriverManager.getConnection(url);
+             PreparedStatement ps = connection.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Users user = new Users();
+                user.setUsername(rs.getString("username"));
+                user.setEmail(rs.getString("email"));
+                user.setRole(rs.getString("role"));
+                user.setRegisteredAt(rs.getString("registered_at"));
+                user.setLastLogin(rs.getString("last_login"));
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return users;
+    }
 
     public boolean check_username(String username) {
         String sql = "SELECT username FROM users WHERE username=?";
@@ -29,7 +51,6 @@ public class Repository {
             return false;
         }
     }
-
     public void save(Users user) {
         String insertsql = "INSERT INTO users(username,email,password,registered_at) VALUES(?,?,?,?)";
 
@@ -50,6 +71,8 @@ public class Repository {
             throw new RuntimeException(e);
         }
     }
+
+
     public String password_hash(String password){
 
         return encoder.encode(password);
@@ -81,6 +104,9 @@ public class Repository {
         }
         return null;
     }
+
+
+
 
     public boolean is_admin(String username){
         try(

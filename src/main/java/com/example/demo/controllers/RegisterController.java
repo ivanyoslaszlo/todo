@@ -3,7 +3,7 @@ package com.example.demo.controllers;
 import com.example.demo.entities.Users;
 
 import org.springframework.web.bind.annotation.*;
-import com.example.demo.UserService;
+import com.example.demo.service.UserService;
 
 
 @RestController

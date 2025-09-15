@@ -22,7 +22,7 @@ function jegyzet_listahoz_adas(noteText) {
     deleteBtn.innerHTML = '<i class="fas fa-trash"></i>'; 
 
     deleteBtn.addEventListener("click", async function () {
-        elem.classList.add("fade-out"); // animáció
+        elem.classList.add("fade-out"); 
         setTimeout(() => elem.remove(), 400);
 
         try {
@@ -67,7 +67,7 @@ async function jegyzetmentes() {
 
         document.getElementById("feladat").value = ""; 
     } catch (error) {
-        alert("Hiba történt a mentés során!");
+        alert("Hiba történt a mentés során! A backend offline.");
         console.error(error);
     }
 }
