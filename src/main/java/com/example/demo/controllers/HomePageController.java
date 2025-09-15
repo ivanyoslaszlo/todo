@@ -34,7 +34,7 @@ public class HomePageController {
     }
 
     @GetMapping("/todo")
-    public String showTodoPage(HttpSession session, HttpServletResponse response) throws SQLException {
+    public String showTodoPage(HttpSession session) throws SQLException {
 
         String username = (String) session.getAttribute("user");
 

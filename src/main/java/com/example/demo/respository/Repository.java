@@ -1,6 +1,7 @@
 package com.example.demo.respository;
 
 import com.example.demo.entities.Users;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.sql.*;
@@ -80,6 +81,7 @@ public class Repository {
         }
         return null;
     }
+
     public boolean is_admin(String username){
         try(
                 Connection connection=DriverManager.getConnection("jdbc:sqlite:user.datas.db");
