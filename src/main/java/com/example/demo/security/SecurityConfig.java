@@ -20,7 +20,10 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/register","/adminpage", "/login", "/loginpage", "/css/**", "/js/**","/getnoteback","/note","/kilepes","/todo","/superadmin").permitAll()
+                        .requestMatchers("/register"
+                                ,"/adminpage", "/login", "/loginpage",
+                                "/css/**", "/js/**","/getnoteback","/note",
+                                "/kilepes","/todo","/superadmin","/script/**" ).permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
