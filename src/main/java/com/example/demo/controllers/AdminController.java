@@ -38,4 +38,23 @@ public class AdminController {
         }
 
     }
+
+    @GetMapping("/users_notes")
+    public  ResponseEntity<?> getUserNotes(HttpSession session){
+
+        String username=(String) session.getAttribute("user");
+
+        if (username==null){
+            return ResponseEntity.status(401).body("Be kell jelentkezni admin fiókal!");
+        }
+
+
+        if (userRepository.is_admin(username)){
+            return ResponseEntity.ok(userRepository.usersWithNotes());
+        }
+        else{
+            return ResponseEntity.status(403).body("Nincs jogosultságod!");
+        }
+    }
+
 }
