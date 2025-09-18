@@ -39,6 +39,18 @@ public class Repository {
         return users;
     }
 
+public List<Users> usersWithNotes(){
+        List<Users> users=findAllUsers();
+        for (Users user:users){
+            user.setNotes(getNotes(user.getUsername()));
+        }
+
+        return users;
+}
+
+
+
+
     public boolean check_username(String username) {
         String sql = "SELECT username FROM users WHERE username=?";
         try (Connection conn = DriverManager.getConnection(url);

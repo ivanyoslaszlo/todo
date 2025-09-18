@@ -1,6 +1,7 @@
 package com.example.demo.entities;
 
 
+import java.util.List;
 
 public class Users {
 
@@ -11,6 +12,16 @@ public class Users {
     private String registeredAt;
     private String lastLogin;
 
+
+    private List<String> notes;
+
+    public List<String> getNotes() {
+        return notes;
+    }
+
+    public void setNotes(List<String> notes) {
+        this.notes = notes;
+    }
 
     public void setRegisteredAt(String registeredAt) {
         this.registeredAt = registeredAt;

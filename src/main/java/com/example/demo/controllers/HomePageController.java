@@ -62,14 +62,22 @@ public class HomePageController {
 
         LocalDateTime belepes_ideje = (LocalDateTime) session.getAttribute("login_time");
         LocalDateTime kilepes_ideje = LocalDateTime.now().withNano(0);
-        Duration munkamenet = Duration.between(belepes_ideje, kilepes_ideje);
-        long hour = munkamenet.toHours();
-        long minutes = munkamenet.toMinutes() % 60;
-        long seconds = munkamenet.toSeconds() % 60;
 
-        System.out.println(session.getAttribute("user") + " Kilépett: " + kilepes_ideje + " || " + "Munkamenet hossza: " + hour + " óra " + minutes + " perc " + seconds + " másodperc");
-        session.invalidate();
-        return "redirect:/";
+        if (belepes_ideje!=null) {
+            Duration munkamenet = Duration.between(belepes_ideje, kilepes_ideje);
+            long hour = munkamenet.toHours();
+            long minutes = munkamenet.toMinutes() % 60;
+            long seconds = munkamenet.toSeconds() % 60;
+
+            System.out.println(session.getAttribute("user") + " Kilépett: " + kilepes_ideje + " || " + "Munkamenet hossza: " + hour + " óra " + minutes + " perc " + seconds + " másodperc");
+        }
+        else {
+            System.out.println("Kilépés történt idő mentés nélkül");
+
+        }
+            session.invalidate();
+            return "redirect:/";
+
     }
 
 
